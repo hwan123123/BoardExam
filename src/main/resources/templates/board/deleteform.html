@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Board</title>
+    <link rel="stylesheet" th:href="@{/css/board.css}">
+</head>
+<body>
+<div class="container">
+    <h1>Delete Board</h1>
+    <form th:action="@{/deleteform/{id}(id=${board.id})}" method="post">
+        <div class="form-group">
+            <p class="warning"><strong>※ 게시글을 삭제하는 경우 복구가 불가능합니다.</strong></p>
+            <p><strong>Title:</strong> <span th:text="${board.title}"></span></p>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required/>
+            <span class="error" th:if="${errorMessage}" th:text="${errorMessage}"></span>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn">삭제</button>
+            <a class="btn" th:href="@{/view/{id}(id=${board.id})}">돌아가기</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

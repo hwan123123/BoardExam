@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Board List</title>
+    <link rel="stylesheet" th:href="@{/css/board.css}">
+</head>
+<body>
+<div class="container">
+    <h1>Board List</h1>
+    <table th:if="${!boards.empty}">
+        <thead>
+        <tr>
+            <th class="id">ID</th>
+            <th class="name">Name</th>
+            <th class="title">Title</th>
+            <th class="created">Created At</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="board : ${boards}">
+            <td class="id" th:text="${board.id}"></td>
+            <td class="name">
+                <span th:text="${board.name}"></span>
+            </td>
+            <td class="title">
+                <a class="title" th:href="@{/view/{id}(id=${board.id})}" th:text="${board.title}"></a>
+            </td>
+            <td class="created" th:text="${#temporals.format(board.created_at, 'yyyy/MM/dd')}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="pagination">
+        <ul>
+            <li th:each="i : ${#numbers.sequence(1, boards.totalPages)}"
+                th:classappend="${currentPage == i} ? 'active-page' : ''">
+                <a th:href="@{/list(page=${i})}" th:text="${i}" class="page-link"></a>
+            </li>
+        </ul>
+    </div>
+    <a th:href="@{/writeform}" class="write-board">글쓰기</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Board</title>
+    <link rel="stylesheet" th:href="@{/css/board.css}">
+</head>
+<body>
+<div class="container">
+    <h1>Update Board</h1>
+    <form th:action="@{/updateform/{id}(id=${board.id})}" th:object="${board}" method="post">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" th:field="*{name}" required/>
+        </div>
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" id="title" th:field="*{title}" required/>
+        </div>
+        <div class="form-group">
+            <label for="content">Content:</label>
+            <textarea id="content" th:field="*{content}" required oninput="autoResize(this)"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" th:field="*{password}" required/>
+            <span class="error" th:if="${errorMessage}" th:text="${errorMessage}"></span>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn">수정</button>
+            <a class="btn" th:href="@{/view/{id}(id=${board.id})}">돌아가기</a>
+        </div>
+    </form>
+</div>
+<script>
+    function autoResize(textarea) {
+        textarea.style.height = 'auto';
+        textarea.style.height = (textarea.scrollHeight) + 'px';
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const textarea = document.getElementById('content');
+        autoResize(textarea);
+    });
+</script>
+</body>
+</html>
